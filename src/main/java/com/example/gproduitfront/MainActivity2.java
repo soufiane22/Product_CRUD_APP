@@ -38,7 +38,6 @@ public class MainActivity2 extends AppCompatActivity {
     ListView superListView;
     EditText label ;
     EditText pu;
-    TextView message ;
     Button btn;
     Button btn1;
     ProgressDialog progressDoalog;
@@ -57,7 +56,7 @@ public class MainActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         binding = ActivityMain2Binding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+         setContentView(binding.getRoot());
 
         final Intent intent = getIntent();
         cat =  getIntent().getStringExtra("category");
@@ -65,7 +64,7 @@ public class MainActivity2 extends AppCompatActivity {
         tv1.setText( cat );
         System.out.println("categorie=====>"+cat);
 
-        message =(TextView) findViewById(R.id.message);
+
         label = findViewById(R.id.label);
         pu = findViewById(R.id.pu);
 
@@ -84,7 +83,7 @@ public class MainActivity2 extends AppCompatActivity {
                  else{
                      System.out.println("********Enregister nouveau produit");
                      RetroProduit p = new RetroProduit(label.getText().toString(),Double.valueOf(pu.getText().toString()),id_cat);
-                     message.setText(content);
+
                      createProduit(p);
                  }
              }
@@ -161,42 +160,6 @@ public class MainActivity2 extends AppCompatActivity {
         });
     }
 
-    private void getAllProduits() {
-
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<List<RetroProduit>> call = service.getAllProduits();
-
-        call.enqueue(new Callback<List<RetroProduit>>() {
-
-            @Override
-            public void onResponse(Call<List<RetroProduit>> call, Response<List<RetroProduit>> response) {
-                
-                if(response.isSuccessful()){
-                    List<RetroProduit> productList = response.body();
-                    String[] oneHeroes = new String[productList.size()];
-                    //  HashMap<?,?> productList = response.body.contains(data);
-                    for (int i = 0; i < productList.size(); i++) {
-                        oneHeroes[i] = productList.get(i).getLabel();
-                        System.out.println("labels======>"+  oneHeroes[i]);
-                    }
-                    Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
-
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "server returned error", Toast.LENGTH_LONG).show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<RetroProduit>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "An error has occurred", Toast.LENGTH_LONG).show();
-                System.out.println("error de récupération des données");
-            }
-
-
-        });
-    }
 
     private void createProduit(RetroProduit p) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -207,12 +170,13 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onResponse(Call<RetroProduit> call, Response<RetroProduit> response) {
             if(!response.isSuccessful()){
-                message.setText("code :"+response.code());
+                Toast.makeText(MainActivity2.this, "code "+response.code(), Toast.LENGTH_SHORT).show();
+
             }else{
                 RetroProduit p = response.body();
                 String content = "";
                  content += "id :"+p.getId()+"label :"+p.getLabel()+"\n"+"prix : "+p.getPu();
-                message.setText(content);
+
                 Toast.makeText(MainActivity2.this, "Produit ajouté avec  succès!", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(MainActivity2.this, MainActivity.class);
                 startActivity(i);
