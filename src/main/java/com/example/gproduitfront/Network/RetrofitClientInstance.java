@@ -1,5 +1,6 @@
 package com.example.gproduitfront.Network;
 
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -7,6 +8,8 @@ public class RetrofitClientInstance {
 
     private static Retrofit retrofit;
     private static final String BASE_URL = "http://192.168.1.102:8085/";
+
+
 
     //http://localhost:8085/produit/getall
     //https://jsonplaceholder.typicode.com/

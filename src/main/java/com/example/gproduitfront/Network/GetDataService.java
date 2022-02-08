@@ -10,26 +10,43 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface GetDataService {
-    @GET("produit/getall")
+    @GET("produit/getall/")
     Call<List<RetroProduit>> getAllProduits() ;
+
+    @GET("produit/getlist/{id_cat}")
+    Call<List<RetroProduit>> getListProduits(@Path("id_cat") String cat) ;
 
     @GET("produit/list/10")
     Call<List<RetroProduit>> getlistProduits();
 
+    @Headers({"content-type: application/json"})
+    @PUT("produit/update/{id}")
+    Call<RetroProduit> updateProduct(@Path("id") String id ,@Body RetroProduit produit );
+
     @POST("produit/save")
     Call<RetroProduit> create_produit(@Body RetroProduit produit);
 
+    @DELETE("produit/delete/{id}")
+    Call<JSONObject> deleteProduct(@Path("id") String id);
 
 
     @Headers({"content-type: application/json"})
-    @GET("category/getall")
+    @GET("category/getall/")
     Call<List<Categorie>> getAllCategories();
+
+
+
+
+
 
 //@Field("id") int id
 }

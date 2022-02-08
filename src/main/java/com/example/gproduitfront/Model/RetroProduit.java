@@ -20,14 +20,14 @@ public class RetroProduit {
     @Expose
     private Double pu;
 
-    @SerializedName("id_cat")
+    @SerializedName("idCat")
     @Expose
-    private String id_cat;
+    private String idCat;
 
     public RetroProduit(String label, Double pu, String id_cat) {
         this.label = label;
         this.pu = pu;
-        this.id_cat = id_cat;
+        this.idCat = id_cat;
     }
 
     public RetroProduit(String label, Double pu) {
@@ -41,11 +41,11 @@ public class RetroProduit {
     }
 
     public String getId_cat() {
-        return id_cat;
+        return idCat;
     }
 
     public void setId_cat(String id_cat) {
-        this.id_cat = id_cat;
+        this.idCat = id_cat;
     }
 
     public String getId() {

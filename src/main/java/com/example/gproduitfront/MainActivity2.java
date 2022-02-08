@@ -38,7 +38,6 @@ public class MainActivity2 extends AppCompatActivity {
     ListView superListView;
     EditText label ;
     EditText pu;
-    TextView message ;
     Button btn;
     Button btn1;
     ProgressDialog progressDoalog;
@@ -46,6 +45,8 @@ public class MainActivity2 extends AppCompatActivity {
     ArrayList<String> categories = new ArrayList<>() ;
     String cat;
     String id_cat;
+    String mode = "";
+    String  id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,7 @@ public class MainActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         binding = ActivityMain2Binding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+         setContentView(binding.getRoot());
 
         final Intent intent = getIntent();
         cat =  getIntent().getStringExtra("category");
@@ -65,9 +66,17 @@ public class MainActivity2 extends AppCompatActivity {
         tv1.setText( cat );
         System.out.println("categorie=====>"+cat);
 
-        message =(TextView) findViewById(R.id.message);
+        id =  getIntent().getStringExtra("id");
+        String  libele_item =  getIntent().getStringExtra("label");
+        String pu_item = getIntent().getStringExtra("pu");
+
+        mode = getIntent().getStringExtra("mode");
+        id_cat = getIntent().getStringExtra("category");
+        System.out.println("id_produit:"+id+ "\n"+"mode : "+mode);
         label = findViewById(R.id.label);
         pu = findViewById(R.id.pu);
+        label.setText(libele_item);
+        pu.setText(pu_item);
 
 
         String content = "label :"+label+"\n"+"prix : "+pu;
@@ -82,10 +91,24 @@ public class MainActivity2 extends AppCompatActivity {
                      Toast.makeText(getApplicationContext(), "Remlissez les champs vides ", Toast.LENGTH_LONG).show();
                  }
                  else{
-                     System.out.println("********Enregister nouveau produit");
-                     RetroProduit p = new RetroProduit(label.getText().toString(),Double.valueOf(pu.getText().toString()),id_cat);
-                     message.setText(content);
-                     createProduit(p);
+
+
+
+                     if(mode.equals("mode_update")){
+                         System.out.println("********modifier produit");
+                         RetroProduit p1 = new RetroProduit(label.getText().toString(),Double.valueOf(pu.getText().toString()));
+                         updateProduct(id,p1);
+
+
+                     }
+                     if(mode.equals("mode_add")){
+
+                         RetroProduit p = new RetroProduit(label.getText().toString(),Double.valueOf(pu.getText().toString()),id_cat);
+                         System.out.println("********Enregister nouveau produit");
+                         createProduit(p);
+
+                     }
+
                  }
              }
          });
@@ -101,6 +124,38 @@ public class MainActivity2 extends AppCompatActivity {
         getAllCategories();
 
        // getAllProduits();
+
+    }
+
+    private void updateProduct(String id,RetroProduit p1) {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<RetroProduit> call = service.updateProduct(id, p1);
+        call.enqueue(new Callback<RetroProduit>() {
+            @Override
+            public void onResponse(Call<RetroProduit> call, Response<RetroProduit> response) {
+                if(!response.isSuccessful()){
+                    Toast.makeText(MainActivity2.this, "code "+response.code(), Toast.LENGTH_SHORT).show();
+
+                }else{
+                    RetroProduit p = response.body();
+                    String content = "";
+                    content += "id :"+p.getId()+"label :"+p.getLabel()+"\n"+"prix : "+p.getPu();
+                    Toast.makeText(MainActivity2.this, "Produit modifié avec  succès!", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(MainActivity2.this, MainActivity.class);
+                    startActivity(i);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RetroProduit> call, Throwable t) {
+                progressDoalog.dismiss();
+                Toast.makeText(getApplicationContext(), call.toString(), Toast.LENGTH_LONG).show();
+                System.out.println("onFailure=======>"+t.getMessage());
+                Toast.makeText(MainActivity2.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
 
     }
 
@@ -123,7 +178,7 @@ public class MainActivity2 extends AppCompatActivity {
                         //System.out.println("3-----id categorie =======>"+id_cat);
                     }
                     categories.add(categoriesList.indexOf(c),c.getDesignation());
-                    System.out.println("3-----id categorie =======>"+id_cat);
+                    //System.out.println("3-----id categorie =======>"+id_cat);
 
                 }
                /* if (categoriesList.contains(cat)) {
@@ -146,7 +201,7 @@ public class MainActivity2 extends AppCompatActivity {
                         Toast.makeText(MainActivity2.this, "Server returned error : unknown error ", Toast.LENGTH_LONG).show();
                     }
                 }
-                //response.body();
+
 
             }
 
@@ -161,42 +216,6 @@ public class MainActivity2 extends AppCompatActivity {
         });
     }
 
-    private void getAllProduits() {
-
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<List<RetroProduit>> call = service.getAllProduits();
-
-        call.enqueue(new Callback<List<RetroProduit>>() {
-
-            @Override
-            public void onResponse(Call<List<RetroProduit>> call, Response<List<RetroProduit>> response) {
-                
-                if(response.isSuccessful()){
-                    List<RetroProduit> productList = response.body();
-                    String[] oneHeroes = new String[productList.size()];
-                    //  HashMap<?,?> productList = response.body.contains(data);
-                    for (int i = 0; i < productList.size(); i++) {
-                        oneHeroes[i] = productList.get(i).getLabel();
-                        System.out.println("labels======>"+  oneHeroes[i]);
-                    }
-                    Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
-
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "server returned error", Toast.LENGTH_LONG).show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<RetroProduit>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "An error has occurred", Toast.LENGTH_LONG).show();
-                System.out.println("error de récupération des données");
-            }
-
-
-        });
-    }
 
     private void createProduit(RetroProduit p) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -207,21 +226,28 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onResponse(Call<RetroProduit> call, Response<RetroProduit> response) {
             if(!response.isSuccessful()){
-                message.setText("code :"+response.code());
+                Toast.makeText(MainActivity2.this, "code "+response.code(), Toast.LENGTH_SHORT).show();
+
             }else{
                 RetroProduit p = response.body();
                 String content = "";
                  content += "id :"+p.getId()+"label :"+p.getLabel()+"\n"+"prix : "+p.getPu();
-                message.setText(content);
+
                 Toast.makeText(MainActivity2.this, "Produit ajouté avec  succès!", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(MainActivity2.this, MainActivity.class);
-                startActivity(i);
+                i.putExtra("category" , cat);
+                startActivityForResult(i, 0);
+                //startActivity(i);
             }
             }
 
             @Override
             public void onFailure(Call<RetroProduit> call, Throwable t) {
                // message.setText(t.getMessage());
+                progressDoalog.dismiss();
+                Toast.makeText(getApplicationContext(), call.toString(), Toast.LENGTH_LONG).show();
+                System.out.println("onFailure=======>"+t.getMessage());
+                Toast.makeText(MainActivity2.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
 
             }
         });

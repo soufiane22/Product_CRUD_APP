@@ -23,14 +23,14 @@
         android:id="@+id/text2"
         android:layout_width="66dp"
         android:layout_height="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="44dp"
         android:text="Libellé "
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="18dp"
         android:textColor="@color/teal_700"
+        android:textSize="18dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/textView2"
@@ -74,53 +74,57 @@
         android:id="@+id/btn"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="68dp"
         android:background="#0074cc"
         android:text="Enregister"
         android:textColor="#ffff"
         android:textStyle="bold"
         app:layout_anchorGravity="end|bottom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.78"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pu" />
 
     <TextView
-        android:id="@+id/message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginBottom="68dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
         android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="228dp"
+        android:layout_height="29dp"
         android:layout_marginTop="44dp"
-        android:layout_marginEnd="160dp"
+        android:layout_marginEnd="4dp"
         android:text="TextView"
+        android:textColor="#fd770a"
+        android:textSize="18dp"
         app:layout_constraintBottom_toTopOf="@+id/label"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginEnd="68dp"
+        android:layout_width="89dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="68dp"
         android:background="#fd770a"
         android:text="Retourner"
         android:textColor="#ffff"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn"
-        app:layout_constraintVertical_bias="0.007" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="94dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="116dp"
+        android:text="Catégorie"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/teal_700"
+        android:textSize="18dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
