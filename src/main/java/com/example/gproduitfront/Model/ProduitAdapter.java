@@ -1,7 +1,10 @@
 package com.example.gproduitfront.Model;
 
 import android.app.ProgressDialog;
+
 import android.content.ClipData;
+
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -91,6 +94,7 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitAdapter.ViewHold
             ViewHolder holder = (ViewHolder) itemView.getTag();
           //  int position = holder.getAdapterPosition();
 
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -109,6 +113,7 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitAdapter.ViewHold
                     context.startActivity(i);
                 }
             });
+
 
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override

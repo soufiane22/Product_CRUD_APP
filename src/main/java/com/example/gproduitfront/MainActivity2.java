@@ -66,6 +66,7 @@ public class MainActivity2 extends AppCompatActivity {
         tv1.setText( cat );
         System.out.println("categorie=====>"+cat);
 
+
         id =  getIntent().getStringExtra("id");
         String  libele_item =  getIntent().getStringExtra("label");
         String pu_item = getIntent().getStringExtra("pu");
@@ -73,6 +74,9 @@ public class MainActivity2 extends AppCompatActivity {
         mode = getIntent().getStringExtra("mode");
         id_cat = getIntent().getStringExtra("category");
         System.out.println("id_produit:"+id+ "\n"+"mode : "+mode);
+
+
+
         label = findViewById(R.id.label);
         pu = findViewById(R.id.pu);
         label.setText(libele_item);
@@ -108,6 +112,12 @@ public class MainActivity2 extends AppCompatActivity {
                          createProduit(p);
 
                      }
+
+
+                     System.out.println("********Enregister nouveau produit");
+                     RetroProduit p = new RetroProduit(label.getText().toString(),Double.valueOf(pu.getText().toString()),id_cat);
+
+                     createProduit(p);
 
                  }
              }

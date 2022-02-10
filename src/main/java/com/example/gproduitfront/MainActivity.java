@@ -102,8 +102,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         // set value selected in spinner
         category_item =  getIntent().getStringExtra("category");
+
 
 
 
@@ -123,11 +125,18 @@ public class MainActivity extends AppCompatActivity {
         String  nbr1 =  getIntent().getStringExtra("nbr_produit1");
         String  moyenne1 =  getIntent().getStringExtra("moyenne1");
 
+
         // get statistic after delete product
+
+        System.out.println("1----nbr_produit====>"+nbr1);
+        System.out.println("2-----moyenne====>"+moyenne1);
+
+
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("statistic"));
 
     }
+
 
     private int getIndex(Spinner myspinner, String category_item) {
 
@@ -139,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return 0;
     }
+
 
     public BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
