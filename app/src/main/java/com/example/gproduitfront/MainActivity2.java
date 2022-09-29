@@ -4,8 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,6 +14,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gproduitfront.Model.Categorie;
 import com.example.gproduitfront.Model.RetroProduit;
@@ -58,7 +59,7 @@ public class MainActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         binding = ActivityMain2Binding.inflate(getLayoutInflater());
-         setContentView(binding.getRoot());
+       //  setContentView(binding.getRoot());
 
         final Intent intent = getIntent();
         cat =  getIntent().getStringExtra("category");
